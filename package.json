@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/William7786/Team-Profile-Genrator/issues"
   },
-  "homepage": "https://github.com/William7786/Team-Profile-Genrator#readme"
+  "homepage": "https://github.com/William7786/Team-Profile-Genrator#readme",
+  "dependencies": {
+    "inquirer": "^8.1.0"
+  }
 }
