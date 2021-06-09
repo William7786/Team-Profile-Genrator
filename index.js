@@ -1,7 +1,6 @@
 const fs = require ('fs')
 const inquirer = require('inquirer')
 const path = require('path')
-const generateMarkdown = require("./Libr/generateMarkdown");
 const Engineer = require ("./Libr/EngineerHtml")
 const Intern = require ("./Libr/InternHtml")
 const Manager = require("./Libr/ManagerHtml")
@@ -9,7 +8,8 @@ const employees= [];
 
 
 function Start() {
-    addEmployee()
+    addEmployee();
+    DefaultHtml()
 };
 
 
@@ -57,7 +57,8 @@ function addEmployee(){
                 "yes",
                 "no"
             ],
-        name: "moreTeam"
+         
+       
         }])
       .then(function({moreTeam, roles}){
     let newTeamM;
@@ -96,14 +97,14 @@ function DefaultHtml() {
             <div class = "container">
                 <div class = "row">
 `
-fs.writeFile("./GeneratedHtml/DefaultHtml", html, function(err){
+fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 
 })
     
 }
 
 function newHtml(member){
-    
+
 }
 
 //Engineer Questions
