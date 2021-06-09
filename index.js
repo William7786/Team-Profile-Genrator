@@ -1,9 +1,10 @@
 const fs = require ('fs')
 const inquirer = require('inquirer')
 const path = require('path')
-const Engineer = require ("./Libr/EmployeeHtml")
+const Employee = require ("./Libr/EmployeeHtml")
 const Intern = require ("./Libr/InternHtml")
 const Manager = require("./Libr/ManagerHtml")
+const Engineer = require("./Libr/EngineerHtml")
 const employees= [];
 
 
@@ -113,7 +114,7 @@ fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 function newHtml(member){
 return new Promise(function (resolve, reject) {
 let data = "";
-const role = member.getrole();
+const role = member.getRole();
 const id = member.getid();
 const email = member.getEmail();
 const name = member.getName();
