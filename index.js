@@ -5,26 +5,14 @@ const generateMarkdown = require("./Libr/generateMarkdown");
 const Engineer = require ("./Libr/EngineerHtml")
 const Intern = require ("./Libr/InternHtml")
 const Manager = require("./Libr/ManagerHtml")
-const employees= [],
+const employees= [];
 
 
-function Start(){
-    html();
-    addEmployee();
-}
+function Start() {
+    addEmployee()
+};
 
-//Write to file
-function wtf (fileName, data){
-    fs.writeFile(fileName, data , function(error) {
-      console.log(data)
-      
-      if(error){
-          return console.log(error)
-      } else {
-          console.log ("No errors here")
-      }
-        
-    })};
+
 
 function addEmployee(){
     inquirer.prompt([{
@@ -33,7 +21,7 @@ function addEmployee(){
     },
     {  
         type:"list",
-        message:"Select a role for the member",
+        message:"Select a role for the Teammember",
         choices: [
             "Engineer",
             "Intern",
@@ -49,11 +37,47 @@ function addEmployee(){
         message:"What is this team members id?",
         name:"id"
     
-    },
-    
+    }])
+    .then(function({name, role, id, email}){
+        let roleI = "";
+        if (role === "Intern"){
+            roleI = "school"
+        } else if (role === "Engineer"){
+        roleInfo = "Git username";
+        }
+        else {
+            roleI = "phone";
+        }
+        inquirer.prompt([{
+            message:"What is the team-members role?"
+        },
+        { 
+            message:"Would you like to add more team Members?",
+            choices:[
+                "yes",
+                "no"
+            ],
+        name: "moreTeam"
+        }])
+      .then(function({moreTeam, roles}){
+    let newTeamM;
+    if (role === "Intern") {
+        newTeamM = new Intern(name, email, id, roles )
+        
+    }
+    else if (role === "Engineer") {
+    newTeamM = new Engineer(name, email, id, roles)
+        
+    }else{
+    newTeamM = new Manager(name, email, id, roles)
+    }
 
-])
+    
+   })
+
+
 }
+)}
     
     
 
