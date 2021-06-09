@@ -9,7 +9,10 @@ const employees= [];
 
 function Start() {
     addEmployee();
-    DefaultHtml()
+    DefaultHtml();
+    newHtml();
+
+
 };
 
 
@@ -37,6 +40,10 @@ function addEmployee(){
         message:"What is this team members id?",
         name:"id"
     
+    },
+    {
+       message: "what is the team members github?" ,
+       name: "github"
     }])
     .then(function({name, role, id, email}){
         let roleI = "";
@@ -88,7 +95,7 @@ function DefaultHtml() {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel ="stylesheet" href = "<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"">
+        <link rel ="stylesheet" href = "<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Team Generator</title>
     </head>
     <body>
@@ -104,6 +111,39 @@ fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 }
 
 function newHtml(member){
+return new Promise(function (resolve, reject) {
+let data = "";
+const role = member.getrole();
+const id = member.getid();
+const email = member.getEmail();
+const name = member.getName();
+if (role === "manager"){
+    const github = getGithub();
+    data = `<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">${name}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">ID: ${id}</li>
+      <li class="list-group-item">Email: ${email}</li>
+      
+    </ul>
+    <div class="card-body">
+      <a href="#" class="card-link">github: ${github}</a>
+    
+    </div>
+  </div>
+  `
+    } else if (role === "Intern"){
+        const school =  member.getSchool();
+        data = ``
+    }
+    fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
+
+    })
+})
+
 
 }
 
