@@ -19,6 +19,7 @@ function Start() {
 function addEmployee(){
     inquirer.prompt([{
         message: "What is the team members name?",
+        type: "input",
         name:"name"
     },
     {  
@@ -27,42 +28,46 @@ function addEmployee(){
         choices: [
             "Engineer",
             "Intern",
-            "Manager",
+            "Manager"
         ],
         name: "role"
     },
     {   message: "What is the email adress for the team member?",
+        type: "input",
         name: "email"
 
     },
     {
         message:"What is this team members id?",
+        type: "input",
         name:"id"
     
     },
     {
        message: "what is the team members github?" ,
+       type: "input",
        name: "github"
     }])
     .then(function({name, role, id, email}){
         let roleI = "";
-        if (role === "Intern"){
-            roleI = "school"
-        } else if (role === "Engineer"){
-        roleI = "Git username";
+        if (role === "Engineer"){
+            roleI = "github"
+        } else if (role === "Intern"){
+        roleI = "school";
         }
         else {
             roleI = "phone";
         }
         inquirer.prompt([{
-            message:"What is the team-members role?"
+            message:"What is the team-members role?",
+            name:"roleI"
         },
         { 
             message:"Would you like to add more team Members?",
             choices:[
                 "yes",
                 "no"
-            ], name: "moreTeam"
+            ], name: moreTeam
          
        
         }])
@@ -157,10 +162,7 @@ if (role === "manager"){
           <li class="list-group-item">Email: ${email}</li>
           <li class="list-group-item">School: ${school}</li>
         </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">github: ${github}</a>
-        
-        </div>
+    
       </div>
       `
     }else{
