@@ -1,7 +1,5 @@
 const fs = require ('fs')
 const inquirer = require('inquirer')
-const path = require('path')
-const Employee = require ("./Libr/EmployeeHtml")
 const Intern = require ("./Libr/InternHtml")
 const Manager = require("./Libr/ManagerHtml")
 const Engineer = require("./Libr/EngineerHtml")
@@ -11,7 +9,7 @@ const employees= [];
 function Start() {
     addEmployee();
     DefaultHtml();
-    newHtml();
+    
 
 
 };
@@ -51,7 +49,7 @@ function addEmployee(){
         if (role === "Intern"){
             roleI = "school"
         } else if (role === "Engineer"){
-        roleInfo = "Git username";
+        roleI = "Git username";
         }
         else {
             roleI = "phone";
@@ -64,7 +62,7 @@ function addEmployee(){
             choices:[
                 "yes",
                 "no"
-            ],
+            ], name: "moreTeam"
          
        
         }])
@@ -81,6 +79,15 @@ function addEmployee(){
     newTeamM = new Manager(name, email, id, roles)
     }
     employees.push(newTeamM);
+    newHtml(newTeamM)
+    .then(function(){
+        if (moreTeam = "yes"){
+            addMember();
+        
+        }else{
+            END();
+        }
+    })
     
     
    })
@@ -96,7 +103,7 @@ function DefaultHtml() {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel ="stylesheet" href = "<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
         <title>Team Generator</title>
     </head>
     <body>
@@ -106,6 +113,7 @@ function DefaultHtml() {
                 <div class = "row">
 `
 fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
+    if (err){console.log(err);}
 
 })
     
@@ -113,11 +121,12 @@ fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 
 function newHtml(member){
 return new Promise(function (resolve, reject) {
-let data = "";
+
 const role = member.getRole();
-const id = member.getid();
+const id = member.getId();
 const email = member.getEmail();
 const name = member.getName();
+let data = "";
 if (role === "manager"){
     const github = getGithub();
     data = `<div class="card" style="width: 18rem;">
@@ -138,14 +147,63 @@ if (role === "manager"){
   `
     } else if (role === "Intern"){
         const school =  member.getSchool();
-        data = ``
+        data = `<div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">${name}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: ${id}</li>
+          <li class="list-group-item">Email: ${email}</li>
+          <li class="list-group-item">School: ${school}</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">github: ${github}</a>
+        
+        </div>
+      </div>
+      `
+    }else{
+        const officeNumber = member.getOfficeNumber();
+        data = `<div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">${name}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: ${id}</li>
+          <li class="list-group-item">Email: ${email}</li>
+          <li class="list-group-item">School: ${school}</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">github: ${github}</a>
+        
+        </div>
+      </div>
+      `
     }
-    fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
+    console.log("adding")
+    fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, data, function(err){
+        if(err){
+            return reject(err);
+        };
+        return resolve();
 
-    })
+    });
+});
+
+
+}
+function END(){
+const html =
+ `
+</div>
+</div>
+</body>
+</html>`
+fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, data, function(err){
+
 })
-
-
 }
 
 //Engineer Questions
