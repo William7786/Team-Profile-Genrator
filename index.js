@@ -56,7 +56,7 @@ function addEmployee(){
         roleI = "school";
         }
         else {
-            roleI = "phone";
+            roleI = "officeNumber";
         }
         inquirer.prompt([{
             message:"What is the team-members role?",
@@ -67,7 +67,7 @@ function addEmployee(){
             choices:[
                 "yes",
                 "no"
-            ], name: moreTeam
+            ], name: "moreTeam"
          
        
         }])
@@ -87,7 +87,7 @@ function addEmployee(){
     newHtml(newTeamM)
     .then(function(){
         if (moreTeam = "yes"){
-            addMember();
+            newHtml();
         
         }else{
             END();
@@ -170,22 +170,19 @@ if (role === "manager"){
         data = `<div class="card" style="width: 18rem;">
         <img class="card-img-top" src="..." alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">${name}</h5>
+          <h5 class="card-title">${name}<br>Manager</h5>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">ID: ${id}</li>
           <li class="list-group-item">Email: ${email}</li>
-          <li class="list-group-item">School: ${school}</li>
+          <li class="list-group-item">Phone: ${officeNumber}</li>
         </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">github: ${github}</a>
-        
-        </div>
+
       </div>
       `
     }
     console.log("adding")
-    fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, data, function(err){
+    fs.appendFile("./GeneratedHtml/DefaultHtml.html", data, function(err){
         if(err){
             return reject(err);
         };
