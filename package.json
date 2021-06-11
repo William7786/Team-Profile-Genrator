@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/William7786/Team-Profile-Genrator#readme",
   "dependencies": {
-    "inquirer": "^8.1.0"
+    "inquirer": "^8.1.0",
+    "jest": "^27.0.4"
   }
 }

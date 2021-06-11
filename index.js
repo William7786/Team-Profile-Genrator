@@ -59,7 +59,7 @@ function addEmployee(){
             roleI = "officeNumber";
         }
         inquirer.prompt([{
-            message:"What is the team-members role?",
+            message:`What is the team-members ${roleI}`,
             name:"roleI"
         },
         { 
@@ -131,8 +131,9 @@ const role = member.getRole();
 const id = member.getId();
 const email = member.getEmail();
 const name = member.getName();
+
 let data = "";
-if (role === "manager"){
+if (role === "Engineer"){
     const github = getGithub();
     data = `<div class="card" style="width: 18rem;">
     <img class="card-img-top" src="..." alt="Card image cap">
@@ -155,7 +156,8 @@ if (role === "manager"){
         data = `<div class="card" style="width: 18rem;">
         <img class="card-img-top" src="..." alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">${name}</h5>
+          <h5 class="card-title">${name} Role: Intern</h5>
+          
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">ID: ${id}</li>
@@ -189,6 +191,7 @@ if (role === "manager"){
         return resolve();
 
     });
+    
 });
 
 
@@ -200,7 +203,7 @@ const html =
 </div>
 </body>
 </html>`
-fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, data, function(err){
+fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 
 })
 }
