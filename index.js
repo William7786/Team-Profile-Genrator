@@ -3,6 +3,7 @@ const inquirer = require('inquirer')
 const Intern = require ("./Libr/InternHtml")
 const Manager = require("./Libr/ManagerHtml")
 const Engineer = require("./Libr/EngineerHtml")
+const Employee = require ("./Libr/EmployeeHtml")
 const employees= [];
 
 
@@ -62,7 +63,7 @@ function addEmployee(){
             message:`What is the team-members ${roleI}`,
             name:"roleI"
         },
-        { 
+        {   type: "list",
             message:"Would you like to add more team Members?",
             choices:[
                 "yes",
@@ -71,17 +72,17 @@ function addEmployee(){
          
        
         }])
-      .then(function({moreTeam, roles}){
+      .then(function({moreTeam, roleI}){
     let newTeamM;
     if (role === "Intern") {
-        newTeamM = new Intern(name, email, id, roles )
+        newTeamM = new Intern(name, email, id, roleI );
         
     }
     else if (role === "Engineer") {
-    newTeamM = new Engineer(name, email, id, roles)
+    newTeamM = new Engineer(name, email, id, roleI);
         
     }else{
-    newTeamM = new Manager(name, email, id, roles)
+    newTeamM = new Manager(name, email, id, roleI);
     }
     employees.push(newTeamM);
     newHtml(newTeamM)
@@ -120,25 +121,28 @@ function DefaultHtml() {
 fs.writeFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
     if (err){console.log(err);}
 
-})
+});
     
 }
 
 function newHtml(member){
 return new Promise(function (resolve, reject) {
 
-const role = member.getRole();
+const name = member.getName();
+const roles = member.getRole();
 const id = member.getId();
 const email = member.getEmail();
-const name = member.getName();
+
+
 
 let data = "";
-if (role === "Engineer"){
-    const github = getGithub();
+if (roles === "Engineer"){
+    const github = member.getGithub();
     data = `<div class="card" style="width: 18rem;">
     <img class="card-img-top" src="..." alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">${name}</h5>
+      <h6 classs = "card-title">Engineer</h5>
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">ID: ${id}</li>
@@ -151,12 +155,12 @@ if (role === "Engineer"){
     </div>
   </div>
   `
-    } else if (role === "Intern"){
+    } else if (roles === "Intern"){
         const school =  member.getSchool();
         data = `<div class="card" style="width: 18rem;">
         <img class="card-img-top" src="..." alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">${name} Role: Intern</h5>
+          <h5 class="card-title">${name} Role: INTERN</h5>
           
         </div>
         <ul class="list-group list-group-flush">
@@ -172,18 +176,18 @@ if (role === "Engineer"){
         data = `<div class="card" style="width: 18rem;">
         <img class="card-img-top" src="..." alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">${name}<br>Manager</h5>
+          <h5 class="card-title">${id}<br> Role: Manager</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">ID: ${id}</li>
-          <li class="list-group-item">Email: ${email}</li>
+          <li class="list-group-item">ID: ${email}</li>
+          <li class="list-group-item">Email:${name} </li>
           <li class="list-group-item">Phone: ${officeNumber}</li>
         </ul>
 
       </div>
       `
     }
-    console.log("adding")
+    
     fs.appendFile("./GeneratedHtml/DefaultHtml.html", data, function(err){
         if(err){
             return reject(err);
@@ -191,7 +195,7 @@ if (role === "Engineer"){
         return resolve();
 
     });
-    
+    console.log("adding")
 });
 
 
@@ -206,6 +210,7 @@ const html =
 fs.appendFile("./GeneratedHtml/DefaultHtml.html", html, function(err){
 
 })
+console.log("end")
 }
 
 //Engineer Questions

@@ -4,9 +4,9 @@ class Employee {
     this.id = id;
     this.email = email;
     }
-    getName(){return this.name;}
-    getId(){return this.id;}
-    getEmail(){return this.email;}
+    getName(){return this.name}
+    getId(){return this.id}
+    getEmail(){return this.email}
     getRole(){return "Employee"}
 
 }
