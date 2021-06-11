@@ -32,7 +32,7 @@ function addEmployee(){
         ],
         name: "role"
     },
-    {   message: "What is the email adress for the team member?",
+    {   message: "What is the email address for the team member?",
         type: "input",
         name: "email"
 
@@ -44,7 +44,7 @@ function addEmployee(){
     
     },
     {
-       message: "what is the team members github?" ,
+       message: "What is the team members github?" ,
        type: "input",
        name: "github"
     }])
